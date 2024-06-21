@@ -4,7 +4,7 @@ import { WorkOrder } from "../models/workOrder";
 import { Result } from "@/types/Result";
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 
-export const get = async (
+export const getList = async (
   orgId: string,
   page: number = 1,
   token?: string
@@ -14,10 +14,10 @@ export const get = async (
     { token }
   );
 
-export const getOptions = (orgId: string, page: number, token?: string) =>
+export const getListOptions = (orgId: string, page: number, token?: string) =>
   queryOptions({
     queryKey: ["work-orders", orgId, page],
-    queryFn: () => get(orgId, page, token),
+    queryFn: () => getList(orgId, page, token),
     enabled: !!orgId,
     placeholderData: keepPreviousData,
   });

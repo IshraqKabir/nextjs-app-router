@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/modules/auth/hooks/useAuth";
-import { getOptions } from "@/modules/workOrders/queries/get";
+import { getListOptions } from "@/modules/workOrders/queries/getList";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -9,7 +9,7 @@ export default function WorkOrdersPage() {
   const { user } = useAuth();
   const [page, setPage] = useState(1);
   const { data, status, isFetching } = useQuery(
-    getOptions(user.data?.data?.orgId || "", page)
+    getListOptions(user.data?.data?.orgId || "", page)
   );
   return (
     <div>
@@ -30,12 +30,12 @@ export default function WorkOrdersPage() {
       )}
       <br />
       <div>
-        <button disabled={page <= 1} onClick={() => setPage(1)}>
+        <button disabled={isFetching || page <= 1} onClick={() => setPage(1)}>
           First
         </button>
         <br />
         <button
-          disabled={page <= 1}
+          disabled={isFetching || page <= 1}
           onClick={() => setPage((page) => page - 1)}
         >
           Prev
@@ -47,20 +47,28 @@ export default function WorkOrdersPage() {
               (num) => num > 0 && num <= (data?.data?.meta.totalPages || 5)
             )
             .map((num) => (
-              <button key={num} onClick={() => setPage(num)}>
+              <button
+                key={num}
+                onClick={() => setPage(num)}
+                disabled={isFetching}
+              >
                 {num}
               </button>
             ))}
         </div>
         <button
-          disabled={!data?.data || page >= data.data.meta.totalPages}
+          disabled={
+            isFetching || !data?.data || page >= data.data.meta.totalPages
+          }
           onClick={() => setPage((page) => page + 1)}
         >
           Next
         </button>
         <br />
         <button
-          disabled={!data?.data || page >= data.data.meta.totalPages}
+          disabled={
+            isFetching || !data?.data || page >= data.data.meta.totalPages
+          }
           onClick={() => data?.data && setPage(data.data.meta.totalPages)}
         >
           Last

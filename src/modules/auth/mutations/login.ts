@@ -3,7 +3,7 @@ import { LoginSchema } from "../schemas/loginSchema";
 import { Result } from "@/types/Result";
 
 export const login = async (creds: LoginSchema): Promise<Result<null>> => {
-  const { error } = await httpClient.post<null>(
+  const { data, error } = await httpClient.post<null>(
     `/api/auth/login`,
     JSON.stringify(creds)
   );
@@ -16,7 +16,7 @@ export const login = async (creds: LoginSchema): Promise<Result<null>> => {
     };
   }
   return {
-    data: null,
+    data,
     error: null,
   };
 };

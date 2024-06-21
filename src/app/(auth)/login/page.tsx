@@ -40,7 +40,7 @@ export default function LoginPage() {
         {errors.password && <span>{errors.password.message}</span>}
         <br />
         {errors.root && <span>{errors.root.message}</span>}
-        <input type="submit" />
+        <input type="submit" disabled={login.status === "pending"} />
       </form>
     </div>
   );

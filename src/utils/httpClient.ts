@@ -34,7 +34,7 @@ const get = async <T>(
 
 const post = async <T>(
   url: string,
-  body: any,
+  body?: any,
   options?: BaseOptions
 ): Promise<Result<T, HttpError>> => {
   const headers: Record<string, string> = {

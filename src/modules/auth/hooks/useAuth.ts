@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getQueryClient } from "@/app/get-query-client";
 import { login } from "@/modules/auth/mutations/login";
 import {
   getUserInfoOptions,
   QUERY_KEY,
 } from "@/modules/auth/queries/getUserInfo";
+import { getQueryClient } from "@/app/getQuerClient";
 
 export const useAuth = () => {
   const queryClient = getQueryClient();

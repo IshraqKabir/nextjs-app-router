@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/modules/auth/hooks/useAuth";
 import { loginSchema, LoginSchema } from "@/modules/auth/schemas/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ export default function LoginPage() {
     setError,
     clearErrors,
   } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
-  const { login, user } = useAuth();
+  const { login } = useAuth();
   const router = useRouter();
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     const { error } = await login.mutateAsync(formData);
@@ -32,8 +32,6 @@ export default function LoginPage() {
   };
   return (
     <div>
-      user: {JSON.stringify(user.data)}
-      Hello Login Page
       <form onSubmit={handleSubmit(onSubmit)}>
         <input defaultValue="" {...register("email")} />
         {errors.email && <span>{errors.email.message}</span>}

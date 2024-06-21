@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/modules/auth/hooks/useAuth";
 import { getOptions } from "@/modules/workOrders/queries/get";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";

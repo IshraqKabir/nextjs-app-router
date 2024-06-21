@@ -1,7 +1,9 @@
 "use client";
 
-import { getQueryClient } from "@/app/get-query-client";
 import { useAuth } from "@/hooks/useAuth";
+import { loginSchema, LoginSchema } from "@/modules/auth/schemas/loginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type Inputs = {
@@ -13,17 +15,20 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<Inputs>({
-    defaultValues: {
-      email: "sys_admin@corsphere.com",
-      password: "asdf1234",
-    },
-  });
+    setError,
+    clearErrors,
+  } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
   const { login, user } = useAuth();
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await login.mutateAsync(data);
+  const router = useRouter();
+  const onSubmit: SubmitHandler<Inputs> = async (formData) => {
+    const { error } = await login.mutateAsync(formData);
+    if (error) {
+      setError("root", { message: error.message });
+      return;
+    }
+    clearErrors("root");
+    router.push("/");
   };
   return (
     <div>
@@ -36,7 +41,7 @@ export default function LoginPage() {
         <input type="password" defaultValue="" {...register("password")} />
         {errors.password && <span>{errors.password.message}</span>}
         <br />
-
+        {errors.root && <span>{errors.root.message}</span>}
         <input type="submit" />
       </form>
     </div>

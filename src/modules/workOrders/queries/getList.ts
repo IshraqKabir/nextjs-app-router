@@ -1,5 +1,5 @@
 import { Paginate } from "@/types/Paginate";
-import { httpClient } from "@/utils/httpClient";
+import { httpClient } from "@/lib/httpClient";
 import { WorkOrder } from "../models/workOrder";
 import { Result } from "@/types/Result";
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
@@ -9,7 +9,7 @@ export const getList = async (
   page: number = 1,
   token?: string
 ): Promise<Result<Paginate<WorkOrder>>> =>
-  await httpClient.get<Paginate<WorkOrder>>(
+  await httpClient.GET<Paginate<WorkOrder>>(
     `/api/organizations/${orgId}/work-orders?page=${page}`,
     { token }
   );

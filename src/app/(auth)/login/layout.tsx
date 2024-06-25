@@ -3,5 +3,9 @@ import { ReactNode } from "react";
 
 export default async function Layout({ children }: { children: ReactNode }) {
   requireAnonymous();
-  return <main>{children}</main>;
+  return (
+    <main className="min-h-dvh flex justify-center items-center">
+      {children}
+    </main>
+  );
 }

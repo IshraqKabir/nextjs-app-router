@@ -1,15 +1,5 @@
 import Link from "next/link";
-import {
-  Bell,
-  CircleUser,
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  Package2,
-  ShoppingCart,
-  Users,
-} from "lucide-react";
+import { Bell, CircleUser, Home, Menu, Package, Package2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ReactNode } from "react";
+import { Logout } from "./logout";
 
 const links = [
   {
@@ -112,7 +103,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <Logout />
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
